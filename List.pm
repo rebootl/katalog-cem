@@ -84,7 +84,38 @@ sub store {
 sub load() {
     my $this = shift;
 
-    open(my $fh_0, "<" . $this->{'storage_path'}) or 
+    return 1 if (! -f $this->{'storage_path'});
+
+    open(my $fh_0, "<" . $this->{'storage_path'}) or die "bad... :(";
+
+    while (my $line = readline($fh_0)) {
+
+        # get values
+        my @values = split /\t/, $line;
+        # debug
+        #foreach my $v (@values) { print $v . "|"; }
+
+        # create new default obj inst. of given type
+        my $obj_inst = $this->{'entry_type'}->new();
+
+        my $i = 0;
+        foreach my $key (sort keys %{$obj_inst}) {
+            $obj_inst->{$key} = $values[$i];
+            # debug
+            #print $key . " => " . $values[$i] . "\n";
+            $i += 1;
+        }
+
+        # debug
+        foreach my $key (sort keys %{$obj_inst}) {
+            print $key . " = " . ${$obj_inst}{$key} . "\n";
+        }
+
+        # debug
+        #print $line;
+    }
+
+
 
 }
 
