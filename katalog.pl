@@ -1,89 +1,23 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w -I.
+#
+# a simple product catalog application for terminal
+#
+#
+#
+#
+#
+#
 
-%articles = (
-    'Artikel1' => 5,
-    'B5' => 3000
-);
+# using the list object
 
-sub list() {
-    print "\n";
-    print "Bezeichnung\tMenge\n";
-    print "-----------\t-----\n";
-    foreach my $name (keys %articles) {
-        print "$name \t";
-        print "\t" if (length $name < 7);
-        print "$articles{$name}\n";
-    }
-    print "\n";
-}
+use List;
 
-sub add() {
-    print "Bezeichnung: ";
-    my $name = <STDIN>;
-    chomp $name;
-    if (exists $articles{$name}) {
-        print "Artikel bereits vorhanden, kehre zurück.\n";
-        return;
-    }
-    if ($name eq "") {
-        print "Leere Eingabe, kehre zurück.\n";
-        return;
-    }
-    print "Menge: ";
-    my $amount = <STDIN>;
-    chomp $amount;
+my $list_obj_1 = new List( storage_path=>"foo.dat" );
 
-    #my %article = (
-    #    'Name' => $name,
-    #    'Amount' => $amount
-    #);
+my $list_obj_2 = new List();
 
-    #my @values = ( $name, $amount );
-    #push @articles, @values;
+$list_obj_1->{'a'} = "test";
 
-    $articles{$name} = $amount;
-    print "Artikel eingefügt: $name, $amount\n";
-}
+print $list_obj_1->{'list'}->[0]->{'name'} . "\n";
 
-sub edit() {
-    list();
-    print "Bezeichner eingeben: ";
-    my $name = <STDIN>;
-    chomp $name;
-    unless ( exists $articles{$name} ) {
-        print "Artikel existiert nicht, kehre zurück.\n";
-        return;
-    }
-    print "Neue Menge eingeben: ";
-    my $amount = <STDIN>;
-    chomp $amount;
-    $articles{$name} = $amount;
-}
-
-sub del() {
-    list();
-    print "Bezeichner eingeben: ";
-    my $name = <STDIN>;
-    chomp $name;
-    if ( exists $articles{$name} ) {
-        delete $articles{$name};
-        print "Gelöscht.\n";
-    }
-    else {
-        print "Artikel nicht gefunden, kehre zurück.\n";
-    }
-}
-
-my $input = "\n";
-do {
-    chop $input; # entfernt das Zeilenende am Ende der Eingabe
-    if ( ! $input ) {}# do nothing              
-    elsif ( $input eq 'q' ) { exit; } # verlässt das Programm
-    elsif ( $input eq 'l' ) { list; } # soll die Artikel mit Bezeichnung und Menge auflisten => to do
-    elsif ( $input eq 'a' ) { add; } # soll einen neuen Artikel hinzufügen => to do
-    elsif ( $input eq 'e' ) { edit; } # soll einen bestehenden Artikel bearbeiten => to do
-    elsif ( $input eq 'd' ) { del; } # soll eine bestehenden Artikel entfernen => to do
-    else { print "Ungültige Eingabe.\n"; } # Fehlermeldung
-    print "(a)Hinzufügen (l)Auflisten (e)Bearbeiten (d)Entfernen (q)Verlassen\n"; # Eingabeaufforderung
-    print "> ";
-} while ( $input = <STDIN> ) # liest eine Eingabezeile in die Standardein
+print $list_obj_1->{'a'} . "\n";

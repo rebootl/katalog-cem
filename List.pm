@@ -84,7 +84,7 @@ sub store {
 sub load() {
     my $this = shift;
 
-
+    open(my $fh_0, "<" . $this->{'storage_path'}) or 
 
 }
 
@@ -106,9 +106,16 @@ sub load_pseudo {
         'company' => "FOOCOMP & Co.",
         'unit' => "M"
     );
+    my $art_3 = Article->new(
+        'name' => "tutUArt",
+        'amount' => 20,
+        'company' => "FOOCOMP & Co.",
+        'unit' => "Stk"
+    );
 
     push(@{$this->{'list'}}, $art_1);
     push(@{$this->{'list'}}, $art_2);
+    push(@{$this->{'list'}}, $art_3);
 }
 
 1;
