@@ -19,7 +19,9 @@ if ($list_obj_1->{'list'}->[0]->{'name'} eq "Keyboard ABC 5") {
 else { print "FAILED\n"; }
 
 # store list to file
+
 $list_obj_1->store();
+
 # check stored file (line 1)
 print "stored line 1 corr.: ";
 open(my $fh_0, "<" . $list_obj_1->{'storage_path'}) or die "cannot open file :(...";
@@ -32,4 +34,11 @@ if ($line1 eq "10\tMYCOMP.org\tKeyboard ABC 5\tKeyboard-ABC-5_MYCOMP-org\tStk\t\
 else { print "FAILED\n"; }
 
 # load stored entries
+
 $list_obj_1->load();
+
+print "loaded entry corr.: ";
+$list_obj_1->{'list'}->[1]->{'company'} eq "FOOCOMP & Co.uu" ?
+    print "PASS\n" : print "FAILED\n";
+
+print (keys "Article"->{'list'});

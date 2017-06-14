@@ -107,9 +107,9 @@ sub load() {
         }
 
         # debug
-        foreach my $key (sort keys %{$obj_inst}) {
-            print $key . " = " . ${$obj_inst}{$key} . "\n";
-        }
+        #foreach my $key (sort keys %{$obj_inst}) {
+        #    print $key . " = " . ${$obj_inst}{$key} . "\n";
+        #}
 
         # debug
         #print $line;
