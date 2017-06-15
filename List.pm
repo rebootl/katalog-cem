@@ -37,7 +37,7 @@ sub new {
     $this->{'entry_type'}->can('new') or die "Noooo... :(\n";
 
     $this->{'list'} = [];
-    $this->load_pseudo();
+    $this->load();
 
     return $this;
 }
@@ -69,8 +69,8 @@ sub store {
     foreach my $entry (@{$this->{'list'}}) {
 
         my $line = "";
-        foreach my $key (sort keys %{$entry}) {
-            $line .= %{$entry}{$key} . "\t";
+        foreach my $key (sort keys %{$entry->{'data'}}) {
+            $line .= %{$entry->{'data'}}{$key} . "\t";
         }
         $str_list .= $line . "\n";
     }
@@ -99,12 +99,14 @@ sub load() {
         my $obj_inst = $this->{'entry_type'}->new();
 
         my $i = 0;
-        foreach my $key (sort keys %{$obj_inst}) {
-            $obj_inst->{$key} = $values[$i];
+        foreach my $key (sort keys %{$obj_inst->{'data'}}) {
+            $obj_inst->{'data'}{$key} = $values[$i];
             # debug
             #print $key . " => " . $values[$i] . "\n";
             $i += 1;
         }
+
+        push(@{$this->{'list'}}, $obj_inst);
 
         # debug
         #foreach my $key (sort keys %{$obj_inst}) {
@@ -141,7 +143,6 @@ sub load_pseudo {
         'name' => "tutUArt",
         'amount' => 20,
         'company' => "FOOCOMP & Co.",
-        'unit' => "Stk"
     );
 
     push(@{$this->{'list'}}, $art_1);

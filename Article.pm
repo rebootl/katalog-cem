@@ -17,7 +17,7 @@ our @keys = (
     'amount',
     'unit',
 );
-# here we could use 'my ...' and a getter alternatively:
+# ^^^ here we could use 'my ...' and a getter alternatively:
 # my @keys = ( ... )
 # sub get_keys() { return @keys; }
 
@@ -30,7 +30,8 @@ our @labels = (
 
 our %label;
 @label{@keys} = @labels;
-# this creates a hash in the form of:
+# ^^^ this creates a hash in the form of:
+#
 # (
 #   name => 'Bezeichnung',
 #   company => 'Firma',
@@ -46,15 +47,24 @@ my @defaults = (
     1,
     'Stk',
 );
+# create hash with default values
+my %data_defaults;
+@data_defaults{@keys} = @defaults;
 
 # (constructor)
 sub new {
     my $class = shift;
 
-    my %data_vals;
-    @data_vals{@keys} = @defaults;
+    # overwrite default values by arguments
+    my %data_vals = (%data_defaults, @_);
 
-    #%data_vals = @_;
+    # debug
+    #foreach my $v (@{_}) {
+    #    print ${v} . "\n";
+    #}
+    #foreach my $key (keys %data_vals) {
+    #    print $key . " = " . $data_vals{$key} . "\n";
+    #}
 
     my $this = {
         data => \%data_vals,
@@ -65,8 +75,6 @@ sub new {
 #            unit => 'Stk',
 #        },
     };
-
-    $this->{'data'} = @_;
 
     bless($this, $class);
 
