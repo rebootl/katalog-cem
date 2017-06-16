@@ -54,3 +54,12 @@ print "article uid corr.: ";
 #foreach my $key (keys %data) {
 #    print $key . " = " . $data{$key} . "\n";
 #}
+#
+#
+my $class = "Article";
+
+my $inst = $class->new();
+
+foreach my $k (sort @inst::keys) {
+    print $k . "\n";
+}

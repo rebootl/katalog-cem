@@ -99,10 +99,14 @@ sub load() {
         my $obj_inst = $this->{'entry_type'}->new();
 
         my $i = 0;
-        foreach my $key (sort keys %{$obj_inst->{'data'}}) {
+#        foreach my $key (sort keys %{$obj_inst->{'data'}}) {
+        foreach my $key (sort @obj_inst::keys) {
+#        foreach my $key ( $this->{'entry_type'}::keys ) {
+        #print sort @Article::keys;
+#        foreach my $key ( sort @Article::keys ) {
             $obj_inst->{'data'}{$key} = $values[$i];
             # debug
-            #print $key . " => " . $values[$i] . "\n";
+            print $key . " => " . $values[$i] . "\n";
             $i += 1;
         }
 
@@ -116,9 +120,6 @@ sub load() {
         # debug
         #print $line;
     }
-
-
-
 }
 
 # get some pseudo list data cause too lazy
