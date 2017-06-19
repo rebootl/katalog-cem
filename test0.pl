@@ -57,9 +57,14 @@ print "article uid corr.: ";
 #
 #
 my $class = "Article";
-
 my $inst = $class->new();
 
-foreach my $k (sort @inst::keys) {
+#foreach my $k (sort @inst::keys) {
+#    print $k . "\n";
+#}
+
+foreach my $k (sort @{$class->get_keys()}) {
     print $k . "\n";
 }
+
+print $class->get_label('name') . "\n";

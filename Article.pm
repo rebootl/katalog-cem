@@ -11,26 +11,29 @@ package Article;
 
 use Helper qw(escape_str_uid);
 
-our @keys = (
+my @keys = (
     'name',
     'company',
     'amount',
     'unit',
 );
-# ^^^ here we could use 'my ...' and a getter alternatively:
-# my @keys = ( ... )
-# sub get_keys() { return @keys; }
 
-our @labels = (
+my @label_values = (
     'Bezeichnung',
     'Firma',
     'Menge',
     'Einheit',
 );
 
-our %label;
-@label{@keys} = @labels;
-# ^^^ this creates a hash in the form of:
+my @default_values = (
+    'testartikel 123',
+    'example AG',
+    1,
+    'Stk',
+);
+
+# create hashes for labels and defaults
+# this creates a hash in the form of:
 #
 # (
 #   name => 'Bezeichnung',
@@ -40,23 +43,26 @@ our %label;
 #
 # ref:
 # - https://stackoverflow.com/questions/3715957/how-can-i-assign-two-arrays-to-a-hash-in-perl
+my %labels;
+@labels{@keys} = @label_values;
+my %defaults;
+@defaults{@keys} = @default_values;
 
-my @defaults = (
-    'testartikel 123',
-    'example AG',
-    1,
-    'Stk',
-);
-# create hash with default values
-my %data_defaults;
-@data_defaults{@keys} = @defaults;
+# (getters)
+sub get_keys() { return \@keys; }
+sub get_labels() { return \%labels; }
+sub get_label() {
+    # (achtung arg. ist $_[1])
+    my $key = $_[1];
+    return $labels{$key};
+}
 
 # (constructor)
 sub new {
     my $class = shift;
 
     # overwrite default values by arguments
-    my %data_vals = (%data_defaults, @_);
+    my %data_vals = (%defaults, @_);
 
     # debug
     #foreach my $v (@{_}) {
